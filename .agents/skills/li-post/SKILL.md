@@ -16,7 +16,7 @@ posted it.
 
 ## Before you write
 
-1. Read `~/.claude/linkedin/voice.md` if it exists. That file is the user's
+1. Read `linkedin/voice.md` if it exists. That file is the user's
    voice profile: how they talk, what they never say, who they are talking to.
    If it does not exist, ask for **three of their own past posts**, infer the
    voice from those, and write the file. Do not skip this and do not invent a
@@ -53,9 +53,10 @@ ship and why, in one sentence.
 
 **2. Draft the full post** on the strongest hook.
 
-**3. Humanize it.** Run the draft through `/li-human` before showing it. Every
-post from this skill ships humanized. That is not an optional extra step, it
-is the reason the draft is worth reading.
+**3. Humanize it.** Run the draft through the li-human skill in
+`.agents/skills/li-human/SKILL.md` before showing it. Every post from this
+skill ships humanized. That is not an optional extra step, it is the reason
+the draft is worth reading.
 
 **4. Print the block.** Copy-ready, in a fenced block, exactly as it should be
 pasted. Then, underneath:
@@ -71,8 +72,9 @@ Reply "yes" to log it, or tell me what to change.
 ```
 
 **5. Never publish.** This skill produces text. The user posts it. On "yes",
-append the post to `~/.claude/linkedin/log.md` with the date, the hook used
-and the first line, so `/li-audit` has a history to work from later.
+append the post to `linkedin/log.md` with the date, the hook used and the first
+line, so the li-audit skill in `.agents/skills/li-audit/SKILL.md` has a history
+to work from later.
 
 ## Rules that make the difference
 

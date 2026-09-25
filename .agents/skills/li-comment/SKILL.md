@@ -55,9 +55,10 @@ Pick by what the post actually is. Never default to type 1.
 ## Output
 
 Give **two options of different types**, labelled, plus a one-line reason for
-the one you would post. Run both through `/li-human` first - a comment with an
-em dash in it is more obviously machine-written than a post, because comments
-are short and people read them closely.
+the one you would post. Run both through the li-human skill in
+`.agents/skills/li-human/SKILL.md` first - a comment with an em dash in it is
+more obviously machine-written than a post, because comments are short and
+people read them closely.
 
 ```
 COMMENT OPTIONS  (on @author's post about hiring)
@@ -81,7 +82,7 @@ part people reply to.
 If the user wants an engagement round, ask for the 5-10 posts as pasted text
 in one message, return one comment each in a single block, and keep a running
 note of who they have already commented on this week in
-`~/.claude/linkedin/log.md`. Commenting on the same three people every day is
+`linkedin/log.md`. Commenting on the same three people every day is
 visible and it looks like what it is.
 
 ## Never

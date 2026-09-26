@@ -3,3 +3,10 @@ __pycache__/
 *.pyc
 .venv/
 *.tmp
+
+linkedin/voice.md
+linkedin/log.md
+linkedin/plan.md
+linkedin/drafts/*
+!linkedin/drafts/.gitkeep
+linkedin/archive/

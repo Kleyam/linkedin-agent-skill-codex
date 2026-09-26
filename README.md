@@ -1,7 +1,7 @@
-# The LinkedIn agent skill
+# The LinkedIn agent skill for Codex
 
-Eleven Claude skills that run a LinkedIn account. Free, MIT, no signup, no API
-key, nothing to connect.
+Eleven skills for Codex and VS Code that help you manage LinkedIn content
+manually. Free, MIT, no signup, no API key, nothing to connect.
 
 One of them writes your posts off 21 hook formulas. One comments on other
 people's posts. One handles the replies under yours. One scores your profile
@@ -15,65 +15,62 @@ before you ever see it.
 
 **Nothing gets posted until you say yes.** These skills write. You post.
 
-## Install
+## Use in Codex and VS Code
 
-Paste this into Claude:
-
-```
-https://github.com/Jakeschincariol/linkedin-agent-skill
-
-Install this skill, then confirm /li-post works.
-```
-
-Or do it yourself, in Claude Code:
+Clone this fork and open the repository in VS Code:
 
 ```bash
-git clone https://github.com/Jakeschincariol/linkedin-agent-skill.git
-cp -r linkedin-agent-skill/skills/li-* ~/.claude/skills/
+git clone https://github.com/Kleyam/linkedin-agent-skill-codex.git
+cd linkedin-agent-skill-codex
 ```
 
-Or as a plugin:
+This fork is based on the [original LinkedIn agent skill repository](https://github.com/Jakeschincariol/linkedin-agent-skill).
 
+The skills live in `.agents/skills/`. The repository-level `AGENTS.md`
+contains the workspace rules, including the requirement that all LinkedIn
+actions remain manual.
+
+Use the Codex chat in VS Code to ask for a skill explicitly, for example:
+
+```text
+Use the li-post skill to turn this specific idea into a LinkedIn post.
+Use the li-human skill to review this draft before I publish it.
 ```
-/plugin marketplace add Jakeschincariol/linkedin-agent-skill
-/plugin install linkedin-agent
-```
 
-Project-local instead of global: copy the same folders into your repo's
-`.claude/skills/`. No Claude Code at all? Paste any single `SKILL.md` at the
-top of a chat and it runs as a mode - you lose the two Python tools, which is
-most of the point of `/li-human`, but the rest works.
+Before writing, fill in `linkedin/voice.md`. The other workspace files are:
 
-Then spend ten minutes on `templates/voice.md`. Copy it to
-`~/.claude/linkedin/voice.md` and fill it in, or paste three of your own posts
-into Claude and say "write my voice.md from these". Every skill reads that
-file. Skip it and everything comes out sounding like everyone else.
+- `linkedin/log.md` for published-post and engagement history.
+- `linkedin/plan.md` for the current content plan.
+- `linkedin/drafts/` for drafts awaiting review.
+
+Codex writes drafts and analysis only. You review and publish everything
+manually on LinkedIn.
 
 ## The eleven
 
-| command | what it does |
+| skill | what it does |
 | --- | --- |
-| `/li-post` | One idea into a post. Three hook options from [21 formulas](skills/li-post/hooks.json), one full draft, humanized before you see it. |
-| `/li-comment` | Comments on other people's posts. Nine types, picked by what the post actually is. Never "Great post!". |
-| `/li-reply` | The thread under your own post. Sorts every comment into lead / substance / peer / support / noise, then writes in that order. |
-| `/li-profile` | Scores your profile against a [12-part rubric](skills/li-profile/rubric.json) out of 100, then rewrites in fix-first order. |
-| `/li-plan` | The week. What to post, when to post it, and the 10 people to engage with. Writes `~/.claude/linkedin/plan.md`. |
-| `/li-human` | The humanizer. Two scripts that actually run. See below. |
-| `/li-carousel` | Document posts. Slide-by-slide copy, the cover that earns the swipe, and the PDF to upload. |
-| `/li-repurpose` | One video, newsletter or transcript into a week of posts that each stand alone. |
-| `/li-dm` | The 200-character invite note, the first message, and the two follow-ups. Two. |
-| `/li-inbox` | Triages the inbox into lead / recruiter / peer / ask / spam, and tells you which tell gave the sequence away. |
-| `/li-audit` | Post-mortem on what you have already published. Ranks by engagement rate and reach multiple, not impressions. |
+| `li-post` | One idea into a post. Three hook options from [21 formulas](.agents/skills/li-post/hooks.json), one full draft, humanized before you see it. |
+| `li-comment` | Comments on other people's posts. Nine types, picked by what the post actually is. Never "Great post!". |
+| `li-reply` | The thread under your own post. Sorts every comment into lead / substance / peer / support / noise, then writes in that order. |
+| `li-profile` | Scores your profile against a [12-part rubric](.agents/skills/li-profile/rubric.json) out of 100, then rewrites in fix-first order. |
+| `li-plan` | The week. What to post, when to post it, and the 10 people to engage with. Writes `linkedin/plan.md`. |
+| `li-human` | The humanizer. Two scripts that actually run. See below. |
+| `li-carousel` | Document posts. Slide-by-slide copy, the cover that earns the swipe, and the PDF to upload. |
+| `li-repurpose` | One video, newsletter or transcript into a week of posts that each stand alone. |
+| `li-dm` | The 200-character invite note, the first message, and the two follow-ups. Two. |
+| `li-inbox` | Triages the inbox into lead / recruiter / peer / ask / spam, and tells you which tell gave the sequence away. |
+| `li-audit` | Post-mortem on what you have already published. Ranks by engagement rate and reach multiple, not impressions. |
 
 ## The humanizer
 
-`/li-human` ships two Python scripts with no dependencies. They run on your
-machine, on your text, and nothing is uploaded.
+The `li-human` skill ships two Python scripts with no dependencies. Run them
+locally from the repository; nothing is uploaded.
 
 ```bash
-python3 humanize.py draft.txt --report      # clean it, show every change
-python3 detect.py draft.txt                  # score it, five checks
-python3 detect.py before.txt after.txt       # prove the delta
+python .agents/skills/li-human/humanize.py draft.txt --report
+python .agents/skills/li-human/detect.py draft.txt
+python .agents/skills/li-human/detect.py before.txt after.txt
 ```
 
 **What comes out automatically:**
@@ -88,7 +85,7 @@ python3 detect.py before.txt after.txt       # prove the delta
   replacements - delve, leverage, robust, seamless, crucial, testament to, "in
   today's fast-paced world", "let that sink in" - with capitalisation preserved
   and URLs untouched. It lives in
-  [`slop.json`](skills/li-human/slop.json) and it is meant to be edited.
+  [`slop.json`](.agents/skills/li-human/slop.json) and it is meant to be edited.
 
 **What gets flagged instead of fixed:** "It's not just X, it's Y", rule-of-three
 triads, one-word rhetorical questions, hashtag walls, reflex engagement bait,
@@ -159,12 +156,15 @@ your name. If a draft needs a number you have not given, it comes back with
 ## Files
 
 ```
-skills/li-post/hooks.json        21 hook formulas: template, example, what it is for, how it gets ruined
-skills/li-human/slop.json        the lexicon: 113 terms, 17 invisible classes, 11 structural tells
-skills/li-human/humanize.py      the three cleaning passes
-skills/li-human/detect.py        the five-check panel
-skills/li-profile/rubric.json    the 100-point profile score
-templates/voice.md               your voice profile. Fill this in first.
+.agents/skills/li-post/hooks.json        21 hook formulas: template, example, what it is for, how it gets ruined
+.agents/skills/li-human/slop.json        the lexicon: 113 terms, 17 invisible classes, 11 structural tells
+.agents/skills/li-human/humanize.py      the three cleaning passes
+.agents/skills/li-human/detect.py        the five-check panel
+.agents/skills/li-profile/rubric.json    the 100-point profile score
+linkedin/voice.md                        your voice profile. Fill this in first.
+linkedin/log.md                          published-post and engagement history.
+linkedin/plan.md                         the current content plan.
+linkedin/drafts/                         drafts awaiting review.
 ```
 
 ## Credit

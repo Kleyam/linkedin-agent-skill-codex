@@ -142,6 +142,7 @@ def pass_lexical(text, lex):
                      "count": len(found), "family": entry["family"]})
         text = pattern.sub(lambda m: _match_case(m.group(0), entry["replace"]), text)
     # Clean up after deletions.
+    text = re.sub(r",\s*([,.;:!?])", r"\1", text)
     text = re.sub(r"[ \t]{2,}", " ", text)
     text = re.sub(r"(?m)^[ \t]*([,.;:])\s*", "", text)
     text = re.sub(r"\s+([,.;:!?])", r"\1", text)
